@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSE VR Campus Tour – Arizona State University</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== PANORAMA VIEWER ===================== -->
+  <div id="pano"></div>
+
+  <!-- ===================== SCENE NAME OVERLAY ===================== -->
+  <div id="scene-info">
+    <span id="scene-name"></span>
+    <span id="scene-description"></span>
+  </div>
+
+  <!-- ===================== TOP HEADER ===================== -->
+  <header id="top-bar">
+    <div id="logo-area">
+      <span id="logo-text">ASU</span>
+      <span id="logo-subtitle">Fulton Schools of Engineering · VR Campus Tour</span>
+    </div>
+    <div id="top-controls">
+      <button id="autorotate-toggle" class="ctrl-btn" title="Toggle autorotate">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+          <path d="M21 3v5h-5"/>
+        </svg>
+      </button>
+      <button id="fullscreen-toggle" class="ctrl-btn" title="Toggle fullscreen">
+        <svg id="fs-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+          <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+        </svg>
+        <svg id="fs-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+          <polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/>
+          <line x1="10" y1="14" x2="3" y2="21"/><line x1="21" y1="3" x2="14" y2="10"/>
+        </svg>
+      </button>
+      <button id="sidebar-toggle" class="ctrl-btn" title="Toggle locations panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <nav id="sidebar">
+    <div id="sidebar-header">
+      <h2>Campus Locations</h2>
+    </div>
+    <ul id="scene-list">
+      <!-- Populated dynamically by app.js -->
+    </ul>
+    <div id="sidebar-footer">
+      <p>Click a location or use hotspots <span class="hotspot-icon-inline">&#x27A1;</span> to navigate between scenes.</p>
+    </div>
+  </nav>
+
+  <!-- ===================== LOADING OVERLAY ===================== -->
+  <div id="loading-overlay">
+    <div id="loading-content">
+      <div id="loading-spinner"></div>
+      <p>Loading panorama…</p>
+    </div>
+  </div>
+
+  <!-- ===================== NO-IMAGE NOTICE ===================== -->
+  <div id="no-image-notice" style="display:none">
+    <div id="no-image-content">
+      <h3>Panoramic image not found</h3>
+      <p>Please add a 360° equirectangular photo at the path shown below, then reload the page.</p>
+      <code id="missing-image-path"></code>
+      <p class="hint">See <strong>images/scenes/README.md</strong> for instructions.</p>
+    </div>
+  </div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <!-- Marzipano 360° viewer library -->
+  <script src="https://cdn.jsdelivr.net/npm/marzipano@0.10.2/dist/marzipano.js"></script>
+  <!-- screenfull for cross-browser fullscreen API -->
+  <script src="https://cdn.jsdelivr.net/npm/screenfull@5.2.0/dist/screenfull.js"></script>
+  <!-- Tour scene data -->
+  <script src="js/data.js"></script>
+  <!-- Main application -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

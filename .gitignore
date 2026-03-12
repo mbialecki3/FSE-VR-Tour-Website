@@ -1,0 +1,4 @@
+# Node – installed locally only to inspect the Marzipano API
+node_modules/
+package.json
+package-lock.json
