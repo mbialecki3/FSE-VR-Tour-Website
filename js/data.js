@@ -19,7 +19,7 @@ var APP_DATA = {
     mouseViewMode:    'drag',   // 'drag' | 'qtvr'
     autorotateEnabled: true,
     autorotateDelay:   3000,    // ms before autorotate kicks in
-    autorotateSpeed:   0.1,     // yaw speed in radians per second (~5.7°/sec)
+    autorotateSpeed:   0.1,     // yaw speed in radians per second (~5.73°/sec)
     fullscreenButton:  true
   },
 

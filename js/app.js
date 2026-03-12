@@ -95,7 +95,7 @@
   var currentSceneId = null;
 
   /* Shared geometry and view limiter */
-  var geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
+  var geometry = new Marzipano.EquirectGeometry([{ width: 4096 }]);
   var viewLimiter = Marzipano.RectilinearView.limit.traditional(
     2048,
     120 * Math.PI / 180,   /* max horizontal FOV */
@@ -265,7 +265,7 @@
    */
   function checkImageExists(url, onMissing) {
     var img = new Image();
-    img.onload  = function () { /* image present — nothing to do */ };
+    img.onload  = function () {};   /* image present — nothing to do */
     img.onerror = function () { onMissing(url); };
     img.src = url;
   }

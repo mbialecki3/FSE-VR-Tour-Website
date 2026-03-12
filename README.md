@@ -24,7 +24,7 @@ An interactive 360° virtual-reality tour of the **Fulton Schools of Engineering
 Place your equirectangular panoramic JPEG images in `images/scenes/`.  
 See **[images/scenes/README.md](images/scenes/README.md)** for the exact filenames expected and image requirements.
 
-The repo ships with solid-colour **placeholder** images so the site loads immediately.  Replace each file with a real 360° photo to see your campus.
+The repo ships with solid-color **placeholder** images so the site loads immediately.  Replace each file with a real 360° photo to see your campus.
 
 ### 2 — Open in a browser
 
