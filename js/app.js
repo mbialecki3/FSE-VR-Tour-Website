@@ -377,7 +377,23 @@
     /* Highlight active item in sidebar */
     var items = sceneListEl.querySelectorAll('li[data-scene-id]');
     items.forEach(function (item) {
-      item.classList.toggle('active', item.dataset.sceneId === sceneData.id);
+      var isActive = (item.dataset.sceneId === sceneData.id);
+      item.classList.toggle('active', isActive);
+
+      /* Automatically expand the group this scene belongs to */
+      if (isActive) {
+        var subList = item.closest('ul.scene-group-items');
+        if (subList) {
+          subList.classList.remove('collapsed');
+          var groupLi = subList.closest('li.scene-group');
+          if (groupLi) {
+            var header = groupLi.querySelector('.scene-group-header');
+            if (header) {
+              header.classList.remove('collapsed');
+            }
+          }
+        }
+      }
     });
   }
 
