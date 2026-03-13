@@ -63,7 +63,7 @@ var APP_DATA = {
     {
       id:          '3d-printlab-ecg-computers',
       name:        'Engineering Center 3D Printing and Lasercutting Lab',
-      subtitle:    'Computers in the print area',
+      subtitle:    'Computers',
       description: 'Computers for designing and uploading models inside the 3d print lab',
       imagePath:   'images/scenes/3d-printlab-ecg/computers-3dprintlab.jpg',
       emoji:       '🖥️',

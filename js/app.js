@@ -395,7 +395,140 @@
         }
       }
     });
+
+    buildEdgeIndicators(sceneData);
   }
+
+  /* ---- Edge Indicators ------------------------------------- */
+  var edgeIndicatorsContainer = document.getElementById('edge-indicators');
+  var currentEdgeIndicators = [];
+
+  function buildEdgeIndicators(sceneData) {
+    if (!edgeIndicatorsContainer) return;
+    edgeIndicatorsContainer.innerHTML = '';
+    currentEdgeIndicators = [];
+
+    (sceneData.linkHotspots || []).forEach(function (hotspot) {
+      var el = document.createElement('div');
+      el.classList.add('edge-indicator');
+
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(svgNS, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      var path = document.createElementNS(svgNS, 'path');
+      path.setAttribute('d', 'M12 2L8 10h3v10h2V10h3z'); // Up arrow
+      svg.appendChild(path);
+      el.appendChild(svg);
+
+      el.addEventListener('click', function(e) {
+        e.stopPropagation();
+        switchScene(hotspot.target);
+      });
+
+      edgeIndicatorsContainer.appendChild(el);
+
+      currentEdgeIndicators.push({
+        element: el,
+        yaw: hotspot.yaw,
+        pitch: hotspot.pitch,
+        target: hotspot.target
+      });
+    });
+  }
+
+  function updateEdgeIndicators() {
+    if (!currentSceneId || !scenes[currentSceneId] || !edgeIndicatorsContainer) {
+      requestAnimationFrame(updateEdgeIndicators);
+      return;
+    }
+
+    var sceneObj = scenes[currentSceneId];
+    var view = sceneObj.view;
+    var containerRect = edgeIndicatorsContainer.getBoundingClientRect();
+    var width = containerRect.width;
+    var height = containerRect.height;
+    
+    // If the container has zero size (e.g. hidden), skip
+    if (width === 0 || height === 0) {
+      requestAnimationFrame(updateEdgeIndicators);
+      return;
+    }
+
+    var centerX = width / 2;
+    var centerY = height / 2;
+    var padding = 24; // Keep arrows slightly inside the edge
+
+    currentEdgeIndicators.forEach(function(item) {
+      var coords = view.coordinatesToScreen({ yaw: item.yaw, pitch: item.pitch });
+      var isOffScreen = false;
+
+      if (!coords) {
+        isOffScreen = true; // Behind the camera
+      } else if (coords.x < 0 || coords.x > width || coords.y < 0 || coords.y > height) {
+        isOffScreen = true; // Outside screen bounds
+      }
+
+      if (isOffScreen) {
+        item.element.style.display = 'flex';
+
+        // Calculate angular difference
+        var yawDist = item.yaw - view.yaw();
+        // Normalize yaw difference to -PI to PI
+        while (yawDist > Math.PI) yawDist -= 2 * Math.PI;
+        while (yawDist < -Math.PI) yawDist += 2 * Math.PI;
+
+        var pitchDist = item.pitch - view.pitch();
+
+        // Direction strictly based on relative angles in view space
+        var dirX = Math.sin(yawDist);
+        var dirY = Math.sin(-pitchDist);
+
+        if (!coords) {
+          // Point is behind, reverse the vector pointing to it
+          dirX = -dirX;
+          dirY = -dirY;
+        }
+
+        var theta = Math.atan2(dirY, dirX);
+        var sin = Math.sin(theta);
+        var cos = Math.cos(theta);
+
+        // Intersect vector with screen rectangle
+        var edgeX = (width / 2) - padding;
+        var edgeY = (height / 2) - padding;
+        
+        var x, y;
+
+        // Prevent division by zero roughly
+        if (Math.abs(edgeX * sin) > Math.abs(edgeY * cos)) {
+          // Intersects top or bottom
+          y = sin > 0 ? edgeY : -edgeY;
+          x = y * cos / sin;
+        } else {
+          // Intersects left or right
+          x = cos > 0 ? edgeX : -edgeX;
+          y = x * sin / cos;
+        }
+
+        x += centerX;
+        y += centerY;
+
+        item.element.style.left = x + 'px';
+        item.element.style.top = y + 'px';
+        
+        // Arrow naturally points UP (in SVG), so we offset by PI/2
+        var arrowRot = theta + Math.PI / 2;
+        item.element.querySelector('svg').style.transform = 'rotate(' + arrowRot + 'rad)';
+      } else {
+        item.element.style.display = 'none';
+      }
+    });
+
+    requestAnimationFrame(updateEdgeIndicators);
+  }
+
+  // Start the render loop
+  requestAnimationFrame(updateEdgeIndicators);
 
   /* ---- Loading overlay helpers ----------------------------- */
   function showLoading() {

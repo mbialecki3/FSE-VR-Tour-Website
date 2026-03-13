@@ -550,3 +550,50 @@ html, body {
   #scene-name { font-size: 0.95rem; }
   #scene-description { font-size: 0.72rem; }
 }
+
+/* ---------- Edge Indicators ------------------------ */
+#edge-indicators {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.edge-indicator {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: rgba(140, 29, 64, 0.8);
+  border: 2px solid #FFC627;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
+  transform-origin: center;
+  transition: opacity 0.2s, background 0.2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  margin-left: -16px;
+  margin-top: -16px;
+  z-index: 10;
+}
+
+.edge-indicator svg {
+  width: 16px;
+  height: 16px;
+  fill: #fff;
+}
+
+.edge-indicator:hover {
+  background: rgba(255, 198, 39, 1);
+  border-color: #fff;
+}
+.edge-indicator:hover svg {
+  fill: #8C1D40;
+}
+
