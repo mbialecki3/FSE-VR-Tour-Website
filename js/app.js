@@ -454,9 +454,25 @@
       return;
     }
 
-    var centerX = width / 2;
-    var centerY = height / 2;
-    var padding = 24; // Keep arrows slightly inside the edge
+    // Dynamic right boundary to account for open sidebar
+    var rightBoundary = width;
+    if (sidebarEl && !sidebarEl.classList.contains('hidden')) {
+      var sidebarRect = sidebarEl.getBoundingClientRect();
+      if (sidebarRect.left > 0) {
+        rightBoundary = sidebarRect.left;
+      }
+    }
+
+    var cx = width / 2;
+    var cy = height / 2;
+    var padding = 24; 
+    
+    // Calculate precise bounds relative to center
+    // Take into account 56px top header bar
+    var bLeft = -cx + padding;
+    var bRight = (rightBoundary - cx) - padding;
+    var bTop = -cy + 56 + padding;
+    var bBottom = cy - padding;
 
     currentEdgeIndicators.forEach(function(item) {
       var coords = view.coordinatesToScreen({ yaw: item.yaw, pitch: item.pitch });
@@ -464,28 +480,41 @@
 
       if (!coords) {
         isOffScreen = true; // Behind the camera
-      } else if (coords.x < 0 || coords.x > width || coords.y < 0 || coords.y > height) {
-        isOffScreen = true; // Outside screen bounds
+      } else if (coords.x < 0 || coords.x > rightBoundary || coords.y < 56 || coords.y > height) {
+        isOffScreen = true; // Outside visible unoccluded screen bounds
       }
 
       if (isOffScreen) {
         item.element.style.display = 'flex';
 
-        // Calculate angular difference
-        var yawDist = item.yaw - view.yaw();
-        // Normalize yaw difference to -PI to PI
-        while (yawDist > Math.PI) yawDist -= 2 * Math.PI;
-        while (yawDist < -Math.PI) yawDist += 2 * Math.PI;
+        var dirX, dirY;
 
-        var pitchDist = item.pitch - view.pitch();
+        if (coords) {
+          // Point is theoretically in front of the camera, just off the boundaries.
+          // Direct vector from center of screen to the projected coordinates gives pinpoint accuracy.
+          dirX = coords.x - cx;
+          dirY = coords.y - cy;
+        } else {
+          // Point is behind the camera (Marzipano returns null).
+          // Fallback to relative view angles.
+          var yawDist = item.yaw - view.yaw();
+          
+          // Normalize yaw difference to -PI to PI
+          while (yawDist > Math.PI) yawDist -= 2 * Math.PI;
+          while (yawDist < -Math.PI) yawDist += 2 * Math.PI;
 
-        // Direction strictly based on relative angles in view space
-        var dirX = Math.sin(yawDist);
-        var dirY = Math.sin(-pitchDist);
+          var pitchDist = item.pitch - view.pitch();
 
-        if (!coords) {
-          // Point is behind, reverse the vector pointing to it
-          dirX = -dirX;
+          // Left/right and up/down
+          // Pitch: negative is down -> larger Y (down on screen).
+          // Pitch: positive is up -> smaller Y (up on screen).
+          dirX = Math.sin(yawDist);
+          dirY = -Math.sin(pitchDist); // Invert because CSS Y goes down 
+          
+          // If the object is behind the camera (yawDist > PI/2 or < -PI/2)
+          // We want the arrow to point towards the closest edge to turn around.
+          // Reversing both axes effectively points the arrow opposite to the view center.
+          dirX = -dirX; 
           dirY = -dirY;
         }
 
@@ -493,25 +522,16 @@
         var sin = Math.sin(theta);
         var cos = Math.cos(theta);
 
-        // Intersect vector with screen rectangle
-        var edgeX = (width / 2) - padding;
-        var edgeY = (height / 2) - padding;
-        
-        var x, y;
+        // Raycasting to screen bounds
+        var tMin = Infinity;
+        if (cos > 0.0001) tMin = Math.min(tMin, bRight / cos);
+        else if (cos < -0.0001) tMin = Math.min(tMin, bLeft / cos);
 
-        // Prevent division by zero roughly
-        if (Math.abs(edgeX * sin) > Math.abs(edgeY * cos)) {
-          // Intersects top or bottom
-          y = sin > 0 ? edgeY : -edgeY;
-          x = y * cos / sin;
-        } else {
-          // Intersects left or right
-          x = cos > 0 ? edgeX : -edgeX;
-          y = x * sin / cos;
-        }
+        if (sin > 0.0001) tMin = Math.min(tMin, bBottom / sin);
+        else if (sin < -0.0001) tMin = Math.min(tMin, bTop / sin);
 
-        x += centerX;
-        y += centerY;
+        var x = cx + tMin * cos;
+        var y = cy + tMin * sin;
 
         item.element.style.left = x + 'px';
         item.element.style.top = y + 'px';

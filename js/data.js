@@ -103,7 +103,7 @@ var APP_DATA = {
     /* ------------------------------------------------------- */
     {
       id:          'maker-space-entrance',
-      name:        'Maker Space',
+      name:        'Maker Space at Hayden Library',
       subtitle:    'Entrance',
       description: 'The main entrance of the Maker Space.',
       imagePath:   'images/scenes/makerspace/placeholder.jpg',
@@ -138,7 +138,7 @@ var APP_DATA = {
     /* ------------------------------------------------------- */
     {
       id:          'maker-space-3d-printers',
-      name:        'Maker Space',
+      name:        'Maker Space at Hayden Library',
       subtitle:    '3D Printers',
       description: 'The 3D printing and rapid prototyping area.',
       imagePath:   'images/scenes/makerspace/placeholder.jpg',
@@ -173,7 +173,7 @@ var APP_DATA = {
     /* ------------------------------------------------------- */
     {
       id:          'maker-space-laser-cutters',
-      name:        'Maker Space',
+      name:        'Maker Space at Hayden Library',
       subtitle:    'Laser Cutters',
       description: 'Laser cutting and engraving stations.',
       imagePath:   'images/scenes/makerspace/placeholder.jpg',
