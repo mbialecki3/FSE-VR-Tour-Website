@@ -96,6 +96,12 @@ var APP_DATA = {
           pitch:    0.1665,
           title:    'Leo and Alex',
           text:     'Bums'
+        },
+        {
+          yaw:      -3.0342,
+          pitch:    1.5154,
+          title:    'Rin',
+          text:     'NOT a bum (unlike leo and alex)'
         }
       ]
     },

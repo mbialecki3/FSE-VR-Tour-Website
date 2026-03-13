@@ -503,19 +503,11 @@
           while (yawDist > Math.PI) yawDist -= 2 * Math.PI;
           while (yawDist < -Math.PI) yawDist += 2 * Math.PI;
 
-          var pitchDist = item.pitch - view.pitch();
-
-          // Left/right and up/down
-          // Pitch: negative is down -> larger Y (down on screen).
-          // Pitch: positive is up -> smaller Y (up on screen).
-          dirX = Math.sin(yawDist);
-          dirY = -Math.sin(pitchDist); // Invert because CSS Y goes down 
-          
-          // If the object is behind the camera (yawDist > PI/2 or < -PI/2)
-          // We want the arrow to point towards the closest edge to turn around.
-          // Reversing both axes effectively points the arrow opposite to the view center.
-          dirX = -dirX; 
-          dirY = -dirY;
+          // In a spherical viewer, the only way to look behind you is to pan left or right.
+          // Looking up or down just gets stuck at the floor/ceiling.
+          // So if an object is behind the camera, point strictly left or right to guide the user to turn around.
+          dirX = yawDist > 0 ? 1 : -1;
+          dirY = 0; // Lock the vertical direction so they don't get guided into the floor
         }
 
         var theta = Math.atan2(dirY, dirX);
