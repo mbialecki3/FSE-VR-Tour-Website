@@ -107,6 +107,11 @@
   }
 
   /* ---- Sidebar toggle -------------------------------------- */
+  // Auto-hide the sidebar on mobile devices (screens smaller than 768px wide)
+  if (window.innerWidth <= 768) {
+    sidebarEl.classList.add('hidden');
+  }
+
   sidebarBtn.addEventListener('click', function () {
     sidebarEl.classList.toggle('hidden');
   });
