@@ -385,10 +385,12 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
-.link-hotspot-wrapper:hover { transform: scale(1.2); }
+.link-hotspot-wrapper:hover .link-hotspot {
+  transform: scale(1.2);
+  background: rgba(255,198,39,0.9);
+}
 
 .link-hotspot {
   width: 44px;
@@ -400,11 +402,7 @@ html, body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 12px rgba(0,0,0,0.6);
-  transition: background 0.2s;
-}
-
-.link-hotspot-wrapper:hover .link-hotspot {
-  background: rgba(255,198,39,0.9);
+  transition: transform 0.2s, background 0.2s;
 }
 
 .link-hotspot svg {
