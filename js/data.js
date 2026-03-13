@@ -154,10 +154,10 @@ var APP_DATA = {
     {
       id:          '3d-printlab-ecg',
       name:        'Engineering Center 3D Printing and Lasercutting Lab',
-      subtitle:    'Print Area',
+      subtitle:    'Entrance',
       description: 'A 3D printing lab located in the Engineering Center, featuring various printers and prototyping tools',
       imagePath:   'images/scenes/3d-printlab-ecg/middle-of-3dprintlab.jpg',
-      emoji:       '🛠️',
+      emoji:       '🚪',
 
       initialViewParameters: {
         yaw:   0.0,
@@ -175,7 +175,14 @@ var APP_DATA = {
         }
       ],
 
-      infoHotspots: []
+      infoHotspots: [
+        {
+          yaw:      2.9838,
+          pitch:    0.4157,
+          title:    'Front Desk',
+          text:     'The front desk is where visitors can check in, ask questions, and get assistance from the staff. It also serves as a hub for accessing resources and information about the lab.\n More information can be accessed by going to https://students.engineering.asu.edu/3d-print-lab/https://students.engineering.asu.edu/3d-print-lab/ or they can be contacted through the email fse3dprintlab@gmail.com or the phone number (480) 727-7330.'
+        }
+      ]
     },
 
     /* ------------------------------------------------------- */
@@ -185,7 +192,7 @@ var APP_DATA = {
       subtitle:    'Computers in the print area',
       description: 'Computers for designing and uploading models inside the 3d print lab',
       imagePath:   'images/scenes/3d-printlab-ecg/computers-3dprintlab.jpg',
-      emoji:       '🛠️',
+      emoji:       '🖥️',
 
       initialViewParameters: {
         yaw:   0.0,
@@ -203,7 +210,20 @@ var APP_DATA = {
         }
       ],
 
-      infoHotspots: []
+      infoHotspots: [
+        {
+          yaw:      0.1182,
+          pitch:    0.3051,
+          title:    'Design Computers',
+          text:     'These computers are used for designing and uploading 3D models to the printers. They have software like <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank">Fusion 360</a> and <a href="https://ultimaker.com/software/ultimaker-cura" target="_blank">Cura</a> installed for 3D modeling and slicing.'
+        },
+        {
+          yaw:      1.8735,
+          pitch:    0.1665,
+          title:    'Leo and Alex',
+          text:     'Bums'
+        }
+      ]
     }
 
 

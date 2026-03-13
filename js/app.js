@@ -57,13 +57,25 @@
     startAutorotate();
   }
 
-  /* ---- Developer Debug Helper ---- */
   /* Click anywhere in the panorama to log the yaw & pitch to the console */
   panoEl.addEventListener('click', function (e) {
     if (!currentSceneId || !scenes[currentSceneId]) return;
+    
+    // Remove the strict canvas check
     var view = scenes[currentSceneId].view;
-    var params = view.parameters();
-    console.log(`Yaw: ${params.yaw.toFixed(4)}, Pitch: ${params.pitch.toFixed(4)}`);
+    
+    // Convert current mouse pixel coordinates to yaw and pitch
+    var rect = panoEl.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    
+    var params = view.screenToCoordinates({ x: x, y: y });
+    
+    if (params) {
+      console.log(`%c[Clicked] Yaw: ${params.yaw.toFixed(4)}, Pitch: ${params.pitch.toFixed(4)}`, 'color: yellow; font-size: 14px; font-weight: bold;');
+    } else {
+      console.warn("Could not calculate click coordinates.");
+    }
   });
 
   autorotateBtn.addEventListener('click', function () {
@@ -215,11 +227,11 @@
 
     var title = document.createElement('div');
     title.classList.add('info-hotspot-title');
-    title.textContent = hotspot.title;
+    title.innerHTML = hotspot.title; // Changed to innerHTML so parsing works
 
     var text = document.createElement('div');
     text.classList.add('info-hotspot-text');
-    text.textContent = hotspot.text;
+    text.innerHTML = hotspot.text; // Changed from textContent to innerHTML
 
     panel.appendChild(title);
     panel.appendChild(text);
@@ -263,7 +275,8 @@
     groupHeader.appendChild(groupToggle);
 
     var subList = document.createElement('ul');
-    subList.classList.add('scene-group-items');
+    subList.classList.add('scene-group-items', 'collapsed'); // Start collapsed!
+    groupHeader.classList.add('collapsed'); // Rotate caret initially
 
     /* Toggle expanding/collapsing */
     groupHeader.addEventListener('click', function() {
@@ -391,8 +404,16 @@
   });
 
   /* ---- Start with the first scene -------------------------- */
+  // Find the Engineering Center Entrance scene
+  var defaultSceneId = null;
+  var targetSceneId = '3d-printlab-ecg'; // The ID of the Engineering Space entrance
+  
   if (APP_DATA.scenes.length > 0) {
-    switchScene(APP_DATA.scenes[0].id);
+    // Try to find the targeted scene, fallback to the first scene if missing
+    var targetScene = APP_DATA.scenes.find(function(s) { return s.id === targetSceneId; });
+    defaultSceneId = targetScene ? targetScene.id : APP_DATA.scenes[0].id;
+    
+    switchScene(defaultSceneId);
   } else {
     hideLoading();
   }
