@@ -122,15 +122,61 @@ html, body {
   padding: 8px 0;
 }
 
-#scene-list li {
+/* Scene Groups */
+.scene-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.scene-group-header:hover {
+  background: rgba(140,29,64,0.3);
+}
+
+.scene-group-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #FFC627;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.scene-group-toggle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  transition: transform 0.3s ease;
+}
+
+.scene-group-header.collapsed .scene-group-toggle {
+  transform: rotate(-90deg);
+}
+
+.scene-group-items {
+  list-style: none;
+  overflow: hidden;
+  max-height: 2000px;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.scene-group-items.collapsed {
+  max-height: 0;
+}
+
+.scene-group-items li {
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-#scene-list li a {
+.scene-group-items li a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
+  padding: 14px 20px 14px 30px; /* indent sub-items slightly */
   text-decoration: none;
   color: rgba(255,255,255,0.85);
   font-size: 0.9rem;
@@ -138,15 +184,16 @@ html, body {
   cursor: pointer;
 }
 
-#scene-list li a:hover {
+.scene-group-items li a:hover {
   background: rgba(255,198,39,0.1);
   color: #FFC627;
 }
 
-#scene-list li.active a {
+.scene-group-items li.active a {
   background: rgba(140,29,64,0.5);
   color: #FFC627;
   border-left: 3px solid #FFC627;
+  padding-left: 27px; /* adjust for border width */
 }
 
 .scene-thumb {

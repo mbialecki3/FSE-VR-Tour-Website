@@ -57,6 +57,15 @@
     startAutorotate();
   }
 
+  /* ---- Developer Debug Helper ---- */
+  /* Click anywhere in the panorama to log the yaw & pitch to the console */
+  panoEl.addEventListener('click', function (e) {
+    if (!currentSceneId || !scenes[currentSceneId]) return;
+    var view = scenes[currentSceneId].view;
+    var params = view.parameters();
+    console.log(`Yaw: ${params.yaw.toFixed(4)}, Pitch: ${params.pitch.toFixed(4)}`);
+  });
+
   autorotateBtn.addEventListener('click', function () {
     if (isAutorotating) {
       stopAutorotate();
@@ -221,41 +230,84 @@
   }
 
   /* ---- Populate sidebar scene list ------------------------- */
+  var groups = {};
+  var groupOrder = [];
+
   APP_DATA.scenes.forEach(function (sceneData) {
-    var li = document.createElement('li');
-    li.dataset.sceneId = sceneData.id;
+    var groupName = sceneData.name || 'Other Locations';
+    if (!groups[groupName]) {
+      groups[groupName] = [];
+      groupOrder.push(groupName);
+    }
+    groups[groupName].push(sceneData);
+  });
 
-    var a = document.createElement('a');
-    a.href = 'javascript:void(0)';
+  groupOrder.forEach(function (groupName) {
+    var scenesInGroup = groups[groupName];
 
-    /* Thumbnail / emoji placeholder */
-    var thumb = document.createElement('span');
-    thumb.classList.add('scene-thumb-placeholder');
-    thumb.textContent = sceneData.emoji || '📷';
+    var groupLi = document.createElement('li');
+    groupLi.classList.add('scene-group');
 
-    /* Text */
-    var infoDiv = document.createElement('div');
-    infoDiv.classList.add('scene-info-text');
+    var groupHeader = document.createElement('div');
+    groupHeader.classList.add('scene-group-header');
+    
+    var groupTitle = document.createElement('span');
+    groupTitle.classList.add('scene-group-title');
+    groupTitle.textContent = groupName;
+    
+    var groupToggle = document.createElement('span');
+    groupToggle.classList.add('scene-group-toggle');
+    groupToggle.innerHTML = '&#9660;'; /* down caret */
 
-    var titleSpan = document.createElement('span');
-    titleSpan.classList.add('scene-title');
-    titleSpan.textContent = sceneData.name;
+    groupHeader.appendChild(groupTitle);
+    groupHeader.appendChild(groupToggle);
 
-    var subtitleSpan = document.createElement('span');
-    subtitleSpan.classList.add('scene-subtitle');
-    subtitleSpan.textContent = sceneData.subtitle || '';
+    var subList = document.createElement('ul');
+    subList.classList.add('scene-group-items');
 
-    infoDiv.appendChild(titleSpan);
-    infoDiv.appendChild(subtitleSpan);
-
-    a.appendChild(thumb);
-    a.appendChild(infoDiv);
-    li.appendChild(a);
-    sceneListEl.appendChild(li);
-
-    a.addEventListener('click', function () {
-      switchScene(sceneData.id);
+    /* Toggle expanding/collapsing */
+    groupHeader.addEventListener('click', function() {
+      subList.classList.toggle('collapsed');
+      groupHeader.classList.toggle('collapsed');
     });
+
+    scenesInGroup.forEach(function (sceneData) {
+      var li = document.createElement('li');
+      li.dataset.sceneId = sceneData.id;
+
+      var a = document.createElement('a');
+      a.href = 'javascript:void(0)';
+
+      /* Thumbnail / emoji placeholder */
+      var thumb = document.createElement('span');
+      thumb.classList.add('scene-thumb-placeholder');
+      thumb.textContent = sceneData.emoji || '📷';
+
+      /* Text */
+      var infoDiv = document.createElement('div');
+      infoDiv.classList.add('scene-info-text');
+
+      var titleSpan = document.createElement('span');
+      titleSpan.classList.add('scene-title');
+      
+      /* Use the subtitle as the item name, fallback to name */
+      titleSpan.textContent = sceneData.subtitle || sceneData.name;
+
+      infoDiv.appendChild(titleSpan);
+
+      a.appendChild(thumb);
+      a.appendChild(infoDiv);
+      li.appendChild(a);
+      subList.appendChild(li);
+
+      a.addEventListener('click', function () {
+        switchScene(sceneData.id);
+      });
+    });
+
+    groupLi.appendChild(groupHeader);
+    groupLi.appendChild(subList);
+    sceneListEl.appendChild(groupLi);
   });
 
   /* ---- Image error detection ------------------------------- */
@@ -310,7 +362,7 @@
     sceneDescEl.textContent = sceneData.description || '';
 
     /* Highlight active item in sidebar */
-    var items = sceneListEl.querySelectorAll('li');
+    var items = sceneListEl.querySelectorAll('li[data-scene-id]');
     items.forEach(function (item) {
       item.classList.toggle('active', item.dataset.sceneId === sceneData.id);
     });
