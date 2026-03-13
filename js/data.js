@@ -26,132 +26,6 @@ var APP_DATA = {
   /* ----- Scene list ------------------------------------------ */
   scenes: [
     {
-      id:          'maker-space-entrance',
-      name:        'Maker Space',
-      subtitle:    'Entrance',
-      description: 'The main entrance of the Maker Space.',
-      imagePath:   'images/scenes/makerspace/placeholder.jpg',
-      emoji:       '🛠️',
-
-      initialViewParameters: {
-        yaw:   0.0,
-        pitch: 0.0,
-        fov:   1.4
-      },
-
-      linkHotspots: [
-        {
-          yaw:      0.5,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-3d-printers',
-          label:    'Go to 3D Printers'
-        },
-        {
-          yaw:     -0.5,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-office',
-          label:    'Go to Office'
-        }
-      ],
-
-      infoHotspots: []
-    },
-
-    /* ------------------------------------------------------- */
-    {
-      id:          'maker-space-3d-printers',
-      name:        'Maker Space',
-      subtitle:    '3D Printers',
-      description: 'The 3D printing and rapid prototyping area.',
-      imagePath:   'images/scenes/makerspace/placeholder.jpg',
-      emoji:       '🛠️',
-
-      initialViewParameters: {
-        yaw:   0.0,
-        pitch: 0.0,
-        fov:   1.4
-      },
-
-      linkHotspots: [
-        {
-          yaw:      3.14,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-entrance',
-          label:    'Go to Entrance'
-        },
-        {
-          yaw:      1.0,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-laser-cutters',
-          label:    'Go to Laser Cutters'
-        }
-      ],
-
-      infoHotspots: []
-    },
-
-    /* ------------------------------------------------------- */
-    {
-      id:          'maker-space-laser-cutters',
-      name:        'Maker Space',
-      subtitle:    'Laser Cutters',
-      description: 'Laser cutting and engraving stations.',
-      imagePath:   'images/scenes/makerspace/placeholder.jpg',
-      emoji:       '🛠️',
-
-      initialViewParameters: {
-        yaw:   0.0,
-        pitch: 0.0,
-        fov:   1.4
-      },
-
-      linkHotspots: [
-        {
-          yaw:      3.14,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-3d-printers',
-          label:    'Go to 3D Printers'
-        }
-      ],
-
-      infoHotspots: []
-    },
-
-    /* ------------------------------------------------------- */
-    {
-      id:          'maker-space-office',
-      name:        'Maker Space',
-      subtitle:    'Office',
-      description: 'The admin and support office for the Maker Space.',
-      imagePath:   'images/scenes/makerspace/placeholder.jpg',
-      emoji:       '🛠️',
-
-      initialViewParameters: {
-        yaw:   0.0,
-        pitch: 0.0,
-        fov:   1.4
-      },
-
-      linkHotspots: [
-        {
-          yaw:      3.14,
-          pitch:    0.0,
-          rotation: 0,
-          target:   'maker-space-entrance',
-          label:    'Go to Entrance'
-        }
-      ],
-
-      infoHotspots: []
-    },
-
-    /* ------------------------------------------------------- */
-    {
       id:          '3d-printlab-ecg',
       name:        'Engineering Center 3D Printing and Lasercutting Lab',
       subtitle:    'Entrance',
@@ -224,7 +98,107 @@ var APP_DATA = {
           text:     'Bums'
         }
       ]
-    }
+    },
+
+    /* ------------------------------------------------------- */
+    {
+      id:          'maker-space-entrance',
+      name:        'Maker Space',
+      subtitle:    'Entrance',
+      description: 'The main entrance of the Maker Space.',
+      imagePath:   'images/scenes/makerspace/placeholder.jpg',
+      emoji:       '🚪',
+
+      initialViewParameters: {
+        yaw:   0.0,
+        pitch: 0.0,
+        fov:   1.4
+      },
+
+      linkHotspots: [
+        {
+          yaw:      0.5,
+          pitch:    0.0,
+          rotation: 0,
+          target:   'placeholder',
+          label:    'placeholder'
+        },
+        {
+          yaw:     -0.5,
+          pitch:    0.0,
+          rotation: 0,
+          target:   'placeholder',
+          label:    'placeholder'
+        }
+      ],
+
+      infoHotspots: []
+    },
+
+    /* ------------------------------------------------------- */
+    {
+      id:          'maker-space-3d-printers',
+      name:        'Maker Space',
+      subtitle:    '3D Printers',
+      description: 'The 3D printing and rapid prototyping area.',
+      imagePath:   'images/scenes/makerspace/placeholder.jpg',
+      emoji:       '🖨️',
+
+      initialViewParameters: {
+        yaw:   0.0,
+        pitch: 0.0,
+        fov:   1.4
+      },
+
+      linkHotspots: [
+        {
+          yaw:      3.14,
+          pitch:    0.0,
+          rotation: 0,
+          target:   'placeholder',
+          label:    'placeholder'
+        },
+        {
+          yaw:      1.0,
+          pitch:    0.0,
+          rotation: 0,
+          target:   'placeholder',
+          label:    'placeholder'
+        }
+      ],
+
+      infoHotspots: []
+    },
+
+    /* ------------------------------------------------------- */
+    {
+      id:          'maker-space-laser-cutters',
+      name:        'Maker Space',
+      subtitle:    'Laser Cutters',
+      description: 'Laser cutting and engraving stations.',
+      imagePath:   'images/scenes/makerspace/placeholder.jpg',
+      emoji:       '✂️',
+
+      initialViewParameters: {
+        yaw:   0.0,
+        pitch: 0.0,
+        fov:   1.4
+      },
+
+      linkHotspots: [
+        {
+          yaw:      3.14,
+          pitch:    0.0,
+          rotation: 0,
+          target:   'placeholder',
+          label:    'placeholder'
+        }
+      ],
+
+      infoHotspots: []
+    },
+
+    /* ------------------------------------------------------- */
 
 
   ] /* end scenes */
