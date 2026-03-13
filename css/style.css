@@ -10,7 +10,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: Arial, Helvetica, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
   background: #1a1a1a;
   color: #f0f0f0;
 }
@@ -41,21 +41,19 @@ html, body {
 
 #logo-area {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
 }
 
-#logo-text {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #FFC627;
-  letter-spacing: 1px;
+#asu-logo {
+  height: 38px;
+  width: auto;
 }
 
 #logo-subtitle {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.3px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.4px;
 }
 
 #top-controls {
