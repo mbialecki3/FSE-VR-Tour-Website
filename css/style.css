@@ -477,9 +477,9 @@ html, body {
   background: rgba(20,20,20,0.95);
   border: 1px solid rgba(255,198,39,0.4);
   border-radius: 8px;
-  padding: 12px 16px;
-  min-width: 200px;
-  max-width: 280px;
+  padding: 16px 20px;
+  min-width: 250px;
+  max-width: 400px;
   /* Don't disable pointer events here! Let hover work naturally. */
   visibility: hidden;
   opacity: 0;
@@ -518,7 +518,8 @@ html, body {
   line-height: 1.5;
 }
 
-.info-hotspot-text a {
+.info-hotspot-text a, 
+.info-hotspot-text .highlight { /* Add highlight class support */
   color: #FFC627;
   text-decoration: underline;
   pointer-events: auto;

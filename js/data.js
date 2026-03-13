@@ -180,7 +180,7 @@ var APP_DATA = {
           yaw:      2.9838,
           pitch:    0.4157,
           title:    'Front Desk',
-          text:     'The front desk is where visitors can check in, ask questions, and get assistance from the staff. It also serves as a hub for accessing resources and information about the lab.\n More information can be accessed by going to their <a href="https://students.engineering.asu.edu/3d-print-lab/https://students.engineering.asu.edu/3d-print-lab/" target="_blank">website</a> or they can be contacted through the email fse3dprintlab@gmail.com or the phone number (480) 727-7330.'
+          text:     'The front desk is where visitors can check in, ask questions, and get assistance from the staff. It also serves as a hub for accessing resources and information about the lab.\n More information can be accessed by going to their <a href="https://students.engineering.asu.edu/3d-print-lab/https://students.engineering.asu.edu/3d-print-lab/" target="_blank">website</a> or they can be contacted through the email <span class="highlight">fse3dprintlab@gmail.com</span> or the phone number <span class="highlight">(480) 727-7330</span>.'
         }
       ]
     },
@@ -215,7 +215,7 @@ var APP_DATA = {
           yaw:      0.1182,
           pitch:    0.3051,
           title:    'Design Computers',
-          text:     'These computers are used for designing and uploading 3D models to the printers. They have software like <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank">Fusion 360</a> and <a href="https://ultimaker.com/software/ultimaker-cura" target="_blank">Cura</a> installed for 3D modeling and slicing.'
+          text:     'These computers are used for designing and uploading 3D models to the printers. They have software like <span class="highlight">Fusion 360</span> and <span class="highlight">Cura</span> installed for 3D modeling and slicing.'
         },
         {
           yaw:      1.8735,
