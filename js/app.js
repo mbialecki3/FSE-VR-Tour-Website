@@ -243,6 +243,13 @@
     wrapper.appendChild(badge);
     wrapper.appendChild(panel);
 
+    /* Prevent text selection from rotating the panorama */
+    ['mousedown', 'touchstart', 'pointerdown', 'mousemove', 'touchmove', 'pointermove'].forEach(function(eventName) {
+      panel.addEventListener(eventName, function (e) {
+        e.stopPropagation();
+      });
+    });
+
     return wrapper;
   }
 
