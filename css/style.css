@@ -347,6 +347,8 @@ html, body {
   padding: 30px;
   max-width: 750px;
   width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
   color: #fff;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
 }
@@ -384,16 +386,22 @@ html, body {
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-wrap: nowrap; /* Prevent wrapping so icon stays nice */
+  gap: 12px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  flex-shrink: 0;
 }
 
 .tutorial-icon {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
+  width: 24px;
+  height: 24px;
   color: #FFC627;
-  display: inline-block;
 }
 
 .tutorial-hotspot-item {
@@ -688,6 +696,38 @@ html, body {
 
   #scene-name { font-size: 0.95rem; }
   #scene-description { font-size: 0.72rem; }
+
+  /* Adjust tutorial for mobile screens */
+  #tutorial-content {
+    padding: 20px;
+  }
+  #tutorial-content h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  #tutorial-content > p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+  .tutorial-section {
+    margin-bottom: 15px;
+  }
+  .tutorial-section h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .tutorial-section ul {
+    padding-left: 10px;
+  }
+  .tutorial-section li {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+  #tutorial-start-btn {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 1rem;
+  }
 }
 
 /* ---------- Edge Indicators ------------------------ */
