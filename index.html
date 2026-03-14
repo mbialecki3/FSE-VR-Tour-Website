@@ -82,6 +82,67 @@
     </div>
   </div>
 
+  <!-- ===================== TUTORIAL OVERLAY ===================== -->
+  <div id="tutorial-overlay" style="display:none;">
+    <div id="tutorial-content">
+      <h2>Welcome to the VR Tour!</h2>
+      <p>Here is a quick guide on how to navigate the 360&deg; environment:</p>
+      
+      <div class="tutorial-section">
+        <h3>Top Right Controls</h3>
+        <ul>
+          <li>
+            <strong>Auto-Rotate</strong> 
+            <svg class="tutorial-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+              <path d="M21 3v5h-5"/>
+            </svg>
+            : Slowly spins the camera automatically.
+          </li>
+          <li>
+            <strong>Fullscreen</strong>
+            <svg class="tutorial-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+              <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+            </svg>
+            : Expands the tour to fill your entire screen.
+          </li>
+          <li>
+            <strong>Locations Panel</strong>
+            <svg class="tutorial-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            : Opens a sidebar to travel to different rooms and their sections.
+          </li>
+        </ul>
+      </div>
+
+      <div class="tutorial-section">
+        <h3>Hotspots</h3>
+        <ul>
+          <li class="tutorial-hotspot-item">
+            <div class="link-hotspot mock-hotspot">
+              <svg viewBox="0 0 24 24"><path d="M12 2L8 10h3v10h2V10h3z"></path></svg>
+            </div>
+            <strong>Link Hotspots:</strong> Click these to move to a new area.
+          </li>
+          <li class="tutorial-hotspot-item">
+            <div class="info-hotspot mock-hotspot">i</div>
+            <strong>Info Hotspots:</strong> Hover over these to learn more about the equipment or space.
+          </li>
+        </ul>
+      </div>
+
+      <div class="tutorial-section">
+        <h3>Navigating the View</h3>
+        <p>Click and drag your mouse (or swipe on touch screens) to look around.</p>
+      </div>
+
+      <button id="tutorial-start-btn">Get Started</button>
+    </div>
+  </div>
+
   <!-- ===================== SCRIPTS ===================== -->
   <!-- Marzipano 360° viewer library -->
   <script src="https://cdn.jsdelivr.net/npm/marzipano@0.10.2/dist/marzipano.js"

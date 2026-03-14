@@ -584,4 +584,23 @@
     hideLoading();
   }
 
+  /* ---- Tutorial Overlay ------------------------------------ */
+  var tutorialOverlay = document.getElementById('tutorial-overlay');
+  var tutorialStartBtn = document.getElementById('tutorial-start-btn');
+
+  if (tutorialOverlay && tutorialStartBtn) {
+    if (!localStorage.getItem('fseVrTourTutorialSeen')) {
+      // Show tutorial on first visit
+      tutorialOverlay.style.display = 'flex';
+      
+      tutorialStartBtn.addEventListener('click', function() {
+        tutorialOverlay.style.display = 'none';
+        localStorage.setItem('fseVrTourTutorialSeen', 'true');
+      });
+    } else {
+      // Hide if already seen
+      tutorialOverlay.style.display = 'none';
+    }
+  }
+
 })();
