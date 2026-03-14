@@ -698,35 +698,51 @@ html, body {
   #scene-description { font-size: 0.72rem; }
 
   /* Adjust tutorial for mobile screens */
+  #tutorial-overlay {
+    padding: 10px;
+    align-items: flex-start; /* Prevents top cutoff if screen is extremely short */
+  }
   #tutorial-content {
-    padding: 20px;
+    padding: 15px;
+    max-height: 95vh; /* Take up more available height */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+    margin: auto 0; /* Keeps it centered vertically when there is extra space but top-aligned when not */
   }
   #tutorial-content h2 {
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
   }
   #tutorial-content > p {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
   }
   .tutorial-section {
-    margin-bottom: 15px;
-  }
-  .tutorial-section h3 {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-  .tutorial-section ul {
-    padding-left: 10px;
-  }
-  .tutorial-section li {
-    font-size: 0.85rem;
     margin-bottom: 10px;
   }
+  .tutorial-section h3 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+  .tutorial-section ul {
+    padding-left: 0;
+  }
+  .tutorial-section li {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    gap: 8px; /* Decrease gap between icon and text */
+  }
+  .tutorial-icon {
+    width: 20px; /* Slightly smaller icons for mobile */
+    height: 20px;
+  }
+  .icon-container {
+    width: 24px;
+  }
   #tutorial-start-btn {
-    margin-top: 15px;
+    margin-top: 10px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 }
 
