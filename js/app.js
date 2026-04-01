@@ -503,7 +503,7 @@
 
         if (coords) {
           // Point is theoretically in front of the camera, just off the boundaries.
-          // Direct vector from center of screen to the projected coordinates gives pinpoint accuracy.
+          // Direct vector from center of screen to the projected coordinates
           dirX = coords.x - cx;
           dirY = coords.y - cy;
         } else {
