@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VR Tour Admin Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+    .hidden { display: none; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f4f4f4; }
+    .section { margin-top: 40px; }
+    #login-section { max-width: 300px; margin: 50px auto; display: flex; flex-direction: column; gap: 10px; }
+    input, button { padding: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+  <h1>VR Tour Admin Dashboard</h1>
+
+  <!-- Login Section -->
+  <div id="login-section">
+    <p>Please log in to view analytics.</p>
+    <input type="email" id="email" placeholder="Admin Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button id="login-btn">Log In</button>
+    <p id="login-error" style="color: red;"></p>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div id="dashboard-section" class="hidden">
+    <button id="logout-btn" style="float: right;">Log Out</button>
+    <p>Welcome, Admin!</p>
+
+    <div class="section">
+      <h2>Recent Analytics Events</h2>
+      <table id="events-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Event</th>
+            <th>Scene</th>
+            <th>Metadata</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Scene Feedback</h2>
+      <table id="feedback-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Scene</th>
+            <th>Helpful?</th>
+            <th>Rating</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+    // Your actual Supabase URL and Key
+    const supabaseUrl = 'https://eqpxmmbtkdqahkhzkytw.supabase.co';
+    const supabaseKey = 'sb_publishable_0aVhp2Owdebx5jgkV2Wp3A_ov0j0oMr';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const loginSection = document.getElementById('login-section');
+    const dashboardSection = document.getElementById('dashboard-section');
+    
+    async function checkUser() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        loginSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+        loadData();
+      } else {
+        loginSection.classList.remove('hidden');
+        dashboardSection.classList.add('hidden');
+      }
+    }
+
+    // Handle Login
+    document.getElementById('login-btn').addEventListener('click', async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      
+      if (error) {
+        document.getElementById('login-error').innerText = error.message;
+      } else {
+        document.getElementById('login-error').innerText = '';
+        checkUser();
+      }
+    });
+
+    // Handle Logout
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      checkUser();
+    });
+
+    // Fetch and display data
+    async function loadData() {
+      // Fetch Events
+      const { data: events, error: eventsError } = await supabase
+        .from('analytics_events')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20);
+        
+      if (!eventsError && events) {
+        const tbody = document.querySelector('#events-table tbody');
+        tbody.innerHTML = events.map(e => `
+          <tr>
+            <td>${new Date(e.created_at).toLocaleString()}</td>
+            <td>${e.event_type}</td>
+            <td>${e.scene_id || '-'}</td>
+            <td>${JSON.stringify(e.metadata) || '-'}</td>
+          </tr>
+        `).join('');
+      }
+
+      // Fetch Feedback
+      const { data: feedback, error: feedbackError } = await supabase
+        .from('scene_feedback')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      if (!feedbackError && feedback) {
+        const tbody = document.querySelector('#feedback-table tbody');
+        tbody.innerHTML = feedback.map(f => `
+          <tr>
+            <td>${new Date(f.created_at).toLocaleString()}</td>
+            <td>${f.scene_id}</td>
+            <td>${f.is_helpful ? 'Yes' : 'No'}</td>
+            <td>${f.rating || '-'} / 5</td>
+            <td>${f.comment || '-'}</td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    // Run on load
+    checkUser();
+  </script>
+</body>
+</html>
