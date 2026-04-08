@@ -797,3 +797,60 @@ html, body {
   fill: #8C1D40;
 }
 
+/* --- Feedback Widget --- */
+#feedback-toggle-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  z-index: 100;
+  transition: background 0.2s;
+}
+#feedback-toggle-btn:hover { background: rgba(140, 29, 64, 0.9); /* ASU Maroon */ }
+
+#feedback-modal {
+  position: absolute;
+  bottom: 70px;
+  right: 20px;
+  width: 300px;
+  background: rgba(25, 25, 25, 0.95);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 101;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  font-family: sans-serif;
+}
+#feedback-modal.hidden { display: none; }
+
+#feedback-content h3 { margin: 0 0 10px 0; font-size: 16px; }
+#feedback-content p { margin: 0 0 10px 0; font-size: 14px; color: #ccc; }
+
+.feedback-helpful-btns { display: flex; gap: 10px; margin-bottom: 15px; }
+.fb-btn {
+  flex: 1; padding: 8px; cursor: pointer; border-radius: 4px; border: none;
+  background: #444; color: white; font-weight: bold; transition: 0.2s;
+}
+.fb-btn:hover, .fb-btn.selected { background: #ffc627; color: #191919; /* ASU Gold */ }
+
+#feedback-extra label { display: block; font-size: 12px; margin-bottom: 5px; color: #ccc; }
+#feedback-comment { width: 100%; box-sizing: border-box; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #555; background: #333; color: white; resize: none; }
+#submit-feedback-btn { width: 100%; padding: 10px; background: #8c1d40; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+#submit-feedback-btn:hover { background: #a8224d; }
+
+#close-feedback-btn {
+  position: absolute; top: 10px; right: 10px; background: none; border: none;
+  color: #888; font-size: 20px; cursor: pointer; line-height: 1;
+}
+#close-feedback-btn:hover { color: white; }
+#feedback-success { text-align: center; color: #4ade80; font-weight: bold; padding: 10px 0; }

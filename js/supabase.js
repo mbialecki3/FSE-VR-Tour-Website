@@ -56,3 +56,80 @@ export async function submitFeedback(sceneId, isHelpful, rating = null, comment 
 
 // Automatically track a page view when this script loads
 trackEvent('page_view');
+
+// ==========================================
+// FEEDBACK UI LOGIC
+// ==========================================
+
+const feedbackToggleBtn = document.getElementById('feedback-toggle-btn');
+const feedbackModal = document.getElementById('feedback-modal');
+const closeFeedbackBtn = document.getElementById('close-feedback-btn');
+const btnYes = document.getElementById('btn-helpful-yes');
+const btnNo = document.getElementById('btn-helpful-no');
+const feedbackExtra = document.getElementById('feedback-extra');
+const submitFeedbackBtn = document.getElementById('submit-feedback-btn');
+const feedbackSuccess = document.getElementById('feedback-success');
+const feedbackComment = document.getElementById('feedback-comment');
+
+let isHelpfulSelection = null;
+
+// Helper function: Find out which scene the user is currently looking at
+function getCurrentSceneId() {
+  // Your app.js adds the 'active' class to the sidebar list item of the current scene
+  const activeSceneLi = document.querySelector('#scene-list li.active');
+  return activeSceneLi ? activeSceneLi.dataset.sceneId : 'unknown_scene';
+}
+
+if (feedbackToggleBtn) {
+  // 1. Open/Close Modal
+  feedbackToggleBtn.addEventListener('click', () => {
+    feedbackModal.classList.toggle('hidden');
+  });
+
+  closeFeedbackBtn.addEventListener('click', () => {
+    feedbackModal.classList.add('hidden');
+  });
+
+  // 2. Handle Yes/No Clicks
+  const handleHelpfulClick = (isHelpful) => {
+    isHelpfulSelection = isHelpful;
+    btnYes.classList.toggle('selected', isHelpful === true);
+    btnNo.classList.toggle('selected', isHelpful === false);
+    feedbackExtra.classList.remove('hidden'); // Show comment box
+  };
+
+  btnYes.addEventListener('click', () => handleHelpfulClick(true));
+  btnNo.addEventListener('click', () => handleHelpfulClick(false));
+
+  // 3. Handle Submit
+  submitFeedbackBtn.addEventListener('click', async () => {
+    if (isHelpfulSelection === null) return;
+    
+    const sceneId = getCurrentSceneId();
+    const comment = feedbackComment.value.trim();
+
+    // Disable button to prevent double-clicks
+    submitFeedbackBtn.disabled = true;
+    submitFeedbackBtn.innerText = 'Submitting...';
+
+    // Call the function we wrote earlier
+    const success = await submitFeedback(sceneId, isHelpfulSelection, null, comment);
+
+    if (success) {
+      // Hide the form, show success message
+      document.querySelector('.feedback-helpful-btns').style.display = 'none';
+      feedbackExtra.style.display = 'none';
+      feedbackSuccess.classList.remove('hidden');
+      document.querySelector('#feedback-content p').style.display = 'none';
+      
+      // Auto-close modal after 2 seconds
+      setTimeout(() => {
+        feedbackModal.classList.add('hidden');
+        feedbackToggleBtn.style.display = 'none'; // Hide the button completely for this scene so they don't spam
+      }, 2000);
+    } else {
+      submitFeedbackBtn.disabled = false;
+      submitFeedbackBtn.innerText = 'Error. Try Again.';
+    }
+  });
+}
