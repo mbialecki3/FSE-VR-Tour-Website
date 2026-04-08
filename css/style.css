@@ -801,7 +801,7 @@ html, body {
 #feedback-toggle-btn {
   position: absolute;
   bottom: 20px;
-  right: 50%;
+  left: 50%;
   transform: translateX(-50%);
 
   background: rgba(0, 0, 0, 0.7);
