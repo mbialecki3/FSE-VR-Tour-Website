@@ -857,3 +857,20 @@ html, body {
 }
 #close-feedback-btn:hover { color: white; }
 #feedback-success { text-align: center; color: #4ade80; font-weight: bold; padding: 10px 0; }
+
+/* --- Star Rating --- */
+.star-rating {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #555; /* Default dim color */
+}
+.star-rating .star {
+  transition: color 0.2s;
+}
+.star-rating .star.hovered,
+.star-rating .star.selected {
+  color: #ffc627; /* ASU Gold */
+}
