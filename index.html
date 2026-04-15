@@ -26,6 +26,16 @@
       <span id="logo-subtitle">Fulton Schools of Engineering · VR Campus Tour</span>
     </div>
     <div id="top-controls">
+      <button id="cookie-settings-btn" class="ctrl-btn" title="Cookie & Privacy Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a9.96 9.96 0 0 0-2 .22V4s0 1-1 1-1-1-1-1H7s0 2-2 2-2-2-2-2"></path>
+          <circle cx="8" cy="12" r="1" fill="currentColor"></circle>
+          <circle cx="14" cy="10" r="1" fill="currentColor"></circle>
+          <circle cx="11" cy="16" r="1" fill="currentColor"></circle>
+          <circle cx="16" cy="15" r="1" fill="currentColor"></circle>
+        </svg>
+      </button>
       <button id="autorotate-toggle" class="ctrl-btn" title="Toggle autorotate">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
@@ -183,6 +193,31 @@
       </div>
 
       <button id="close-feedback-btn">×</button>
+    </div>
+  </div>
+
+  <!-- ===================== DATA CONSENT OVERLAY ===================== -->
+  <div id="cookie-consent-banner" class="hidden">
+    <div class="cookie-consent-content">
+      <h3>Data & Privacy Settings</h3>
+      <p>We use cookies and collect anonymous usage data to improve your experience on our VR Tour. You can change this setting at any time using the cookie icon in the top right.</p>
+      
+      <div class="cookie-consent-options">
+        <label class="consent-option">
+          <input type="checkbox" id="consent-analytics" checked>
+          <span>Anonymous Usage Analytics</span>
+        </label>
+        <label class="consent-option">
+          <input type="checkbox" id="consent-location" checked>
+          <span>Location Data (Optional)</span>
+        </label>
+      </div>
+
+      <div class="cookie-consent-buttons">
+        <button id="cookie-consent-accept">Save Preferences</button>
+        <button id="cookie-consent-accept-all">Accept All</button>
+        <button id="cookie-consent-decline">Decline All</button>
+      </div>
     </div>
   </div>
 
