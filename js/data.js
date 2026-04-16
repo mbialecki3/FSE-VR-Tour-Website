@@ -105,7 +105,25 @@ var APP_DATA = {
         }
       ]
     },
+    /* ------------- Test Computer Screen -------------------- */
+    {
+      id:         '3d-printlab-ecg-computer-screen',
+      name:      'Engineering Center 3D Printing and Lasercutting Lab',
+      subtitle:    'Computer Screen TEST',
+      description: 'A computer screen for viewing and managing 3D print jobs TEST',
+      imagePath:   'images/scenes/3d-printlab-ecg/test_computer_screen.jpg',
+      emoji:       '🖥️',
 
+      linkHotspots: [
+        {
+          yaw:      0.8405,
+          pitch:    0.3276,
+          rotation: 0,
+          target:   '3d-printlab-ecg-computers',
+          label:    'Go to Computers'
+        }
+      ],
+    },
     /* ------------------------------------------------------- */
     {
       id:          'maker-space-entrance',
