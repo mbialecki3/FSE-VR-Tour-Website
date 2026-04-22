@@ -381,10 +381,28 @@
     );
   }
 
+  // To catch the initial scene view after Supabase and Consent modules settle
+  var initialSceneTracked = false;
+
+  function trackInitialScene() {
+    if (!initialSceneTracked && window.trackEvent && currentSceneId && scenes[currentSceneId]) {
+      window.trackEvent('scene_view', currentSceneId);
+      initialSceneTracked = true;
+    }
+  }
+
+  window.addEventListener('supabaseLoaded', trackInitialScene);
+  window.addEventListener('cookieBannerDismissed', trackInitialScene);
+
   /* ---- Update header / sidebar UI -------------------------- */
   function updateUI(sceneData) {
     sceneNameEl.textContent = sceneData.name;
     sceneDescEl.textContent = sceneData.description || '';
+
+    // Log a scene_view event in Supabase, capturing the viewed scene
+    if (window.trackEvent && initialSceneTracked) {
+      window.trackEvent('scene_view', sceneData.id);
+    }
 
     /* Highlight active item in sidebar */
     var items = sceneListEl.querySelectorAll('li[data-scene-id]');
@@ -595,19 +613,28 @@
   var tutorialOverlay = document.getElementById('tutorial-overlay');
   var tutorialStartBtn = document.getElementById('tutorial-start-btn');
 
-  if (tutorialOverlay && tutorialStartBtn) {
-    if (!localStorage.getItem('fseVrTourTutorialSeen')) {
-      // Show tutorial on first visit
-      tutorialOverlay.style.display = 'flex';
-      
-      tutorialStartBtn.addEventListener('click', function() {
+  function checkAndShowTutorial() {
+    if (tutorialOverlay && tutorialStartBtn) {
+      if (!localStorage.getItem('fseVrTourTutorialSeen')) {
+        // Show tutorial on first visit
+        tutorialOverlay.style.display = 'flex';
+        
+        tutorialStartBtn.addEventListener('click', function() {
+          tutorialOverlay.style.display = 'none';
+          localStorage.setItem('fseVrTourTutorialSeen', 'true');
+        });
+      } else {
+        // Hide if already seen
         tutorialOverlay.style.display = 'none';
-        localStorage.setItem('fseVrTourTutorialSeen', 'true');
-      });
-    } else {
-      // Hide if already seen
-      tutorialOverlay.style.display = 'none';
+      }
     }
+  }
+
+  // Wait for the cookie consent banner to be dismissed before showing the tutorial
+  if (localStorage.getItem('vr_tour_banner_dismissed') === 'true') {
+    checkAndShowTutorial();
+  } else {
+    window.addEventListener('cookieBannerDismissed', checkAndShowTutorial);
   }
 
 })();
